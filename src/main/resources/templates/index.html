@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tasks</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="../static/css/app.css">
+</head>
+<body>
+<main>
+    <h1>Tasks</h1>
+    <p class="lead">A Spring Boot web app with Thymeleaf pages, on OceanLaunch.
+        <span th:text="${open == 1 ? '1 task open.' : open + ' tasks open.'}">0 tasks open.</span></p>
+
+    <form class="add" th:action="@{/tasks}" th:object="${form}" method="post" novalidate>
+        <div class="field">
+            <input th:field="*{title}" maxlength="120" placeholder="What needs doing?" aria-label="Task"
+                   th:classappend="${#fields.hasErrors('title')} ? 'invalid'">
+            <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Write what needs doing.</p>
+        </div>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul class="tasks">
+        <li th:if="${tasks.isEmpty()}" class="empty">Nothing yet. Add your first task above.</li>
+        <li th:each="task : ${tasks}" th:classappend="${task.done} ? 'done'">
+            <form th:action="@{/tasks/{id}/toggle(id=${task.id})}" method="post">
+                <button class="check" type="submit" th:aria-label="${task.done ? 'Mark as open' : 'Mark as done'}"
+                        th:text="${task.done ? '✓' : ''}"></button>
+            </form>
+            <span class="title" th:text="${task.title}">A task</span>
+            <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post">
+                <button class="link" type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+</main>
+</body>
+</html>
