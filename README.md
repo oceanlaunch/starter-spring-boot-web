@@ -13,7 +13,7 @@ Spring Boot + PostgreSQL starter).
 ## Deploy it
 
 In the OceanLaunch portal, open **Templates** and choose **Spring Boot web app**. Your app is live at its
-`*.apps.oceanlaunch.cloud` address in a few minutes.
+`*.oceanlaunch.app` address in a few minutes.
 
 ## Make it yours
 
